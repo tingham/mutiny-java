@@ -1,24 +1,30 @@
 package com.mutiny;
 
 import java.util.ArrayList;
+import processing.core.*;
 
-public class MRect {
-	float x;
-	float y;
-	float w;
-	float h;
+public class Rect {
 
-	public MRect (float x, float y, float w, float h) {
+	public float x;
+	public float y;
+	public float w;
+	public float h;
+
+	public Rect (float x, float y, float w, float h) {
 		this.x = x;
 		this.y = y;
 		this.w = w;
 		this.h = h;
 	}
 
-	public ArrayList<MRect> subdivide () {
-		ArrayList<MRect> result = new ArrayList<MRect>();
+	public PVector origin () {
+		return new PVector(this.x, this.y);
+	}
+
+	public ArrayList<Rect> subdivide () {
+		ArrayList<Rect> result = new ArrayList<Rect>();
 		result.add(
-			new MRect(
+			new Rect(
 				(float)(this.x),
 				(float)(this.y),
 				(float)(this.w * 0.5),
@@ -27,7 +33,7 @@ public class MRect {
 		);
 
 		result.add(
-			new MRect(
+			new Rect(
 				(float)(this.x + (this.w * 0.5)),
 				(float)(this.y),
 				(float)(this.w * 0.5),
@@ -36,7 +42,7 @@ public class MRect {
 		);
 
 		result.add(
-			new MRect(
+			new Rect(
 				(float)(this.x),
 				(float)(this.y + (this.h * 0.5)),
 				(float)(this.w * 0.5),
@@ -45,7 +51,7 @@ public class MRect {
 		);
 
 		result.add(
-			new MRect(
+			new Rect(
 				(float)(this.x + (this.w * 0.5)),
 				(float)(this.y + (this.h * 0.5)),
 				(float)(this.w * 0.5),
@@ -60,14 +66,14 @@ public class MRect {
 		return "x: " + x + ", y: " + y + ", w: " + w + ", h: " + h;
 	}
 
-	boolean intersects (MRect b) {
+	boolean intersects (Rect b) {
 		if ((this.y > b.y && this.y < b.y + b.h) || (b.y > this.y && b.y < this.y + this.h)) {
 			return true;
 		}
 		return false;
 	}
 
-	boolean intersectsY (MRect b) {
+	boolean intersectsY (Rect b) {
 		if (this.y > b.y && this.y < b.y + b.h) {
 			return true;
 		}
@@ -77,7 +83,7 @@ public class MRect {
 		return false;
 	}
 
-	boolean intersectsX (MRect b) {
+	boolean intersectsX (Rect b) {
 		if (this.x > b.x && this.x < b.x + b.w) {
 			return true;
 		}
